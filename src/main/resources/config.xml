@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="quest" class="com.learnsome.spring_xmlconfig.SlayDragonQuest" />
+
+    <bean id="knight" class="com.learnsome.spring_xmlconfig.QuestSolvingKnight">
+        <constructor-arg ref="quest" />
+    </bean>
+
+    <bean id="minstrel" class="com.learnsome.spring_xmlconfig.Minstrel" />
+
+    <aop:config>
+        <aop:aspect ref = "minstrel">
+            <aop:pointcut id="singForKnight" expression="execution(* *.beBrave(..))"/>
+
+            <aop:before pointcut-ref="singForKnight" method="singBefore" />
+            <aop:after pointcut-ref="singForKnight" method="singAfter" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>
